@@ -9,8 +9,11 @@ import flixel.math.FlxMath;
 
 class MenuState extends FlxState
 {
+	private var spaceShip:SpaceShip;
 	override public function create():Void
 	{
+		spaceShip = new SpaceShip(32,32);
+		add(spaceShip);
 		super.create();
 	}
 
