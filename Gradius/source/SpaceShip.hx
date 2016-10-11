@@ -20,14 +20,14 @@ class SpaceShip extends FlxSprite
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset) 
 	{
 		super(X, Y, SimpleGraphic);
-		makeGraphic(32, 32);	
+		makeGraphic(16, 16);	
 	}
 	
 	override public function update(elapsed:Float):Void
 	{	
 		super.update(elapsed);
 			
-		/*//movimiento
+		//movimiento
 		key_right = FlxG.keys.pressed.RIGHT;
 		key_left = FlxG.keys.pressed.LEFT;
 		key_up = FlxG.keys.pressed.UP;
@@ -48,13 +48,13 @@ class SpaceShip extends FlxSprite
 			moveY = 0;
 			
 		x += moveX * velocidadX;
-		y += moveY * velocidadY;*/
+		y += moveY * velocidadY;
 			   
 		//disparo
 		timer++;
 		if ((FlxG.keys.pressed.SPACE || FlxG.keys.justPressed.SPACE) && timer >= 15)
 		{
-			laser = new Laser(x + width, y + height / 2 -8);
+			laser = new Laser(x + width, y + height / 2 -4);
 			timer = 0;
 			FlxG.state.add(laser);
 		}
