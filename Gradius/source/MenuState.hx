@@ -2,6 +2,9 @@ package;
 
 import flixel.FlxG;
 import flixel.FlxCamera.FlxCameraFollowStyle;
+import flixel.addons.editors.tiled.TiledObjectLayer;
+import flixel.FlxObject;
+import flixel.util.FlxColor;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.text.FlxText;
@@ -18,10 +21,20 @@ class MenuState extends FlxState
 	
 	override public function create():Void
 	{
-		spaceShip = new SpaceShip(32,32);
+		FlxG.cameras.bgColor = FlxColor.BLUE;
 
 		loader = new FlxOgmoLoader(AssetPaths.nivel__oel);
 		tileMap = loader.loadTilemap(AssetPaths.rocas__png, 16, 16, "tilesets");
+		tileMap.follow();
+        tileMap.setTileProperties(1, FlxObject.ANY);
+        tileMap.setTileProperties(2, FlxObject.ANY);
+		tileMap.setTileProperties(3, FlxObject.ANY);
+		tileMap.setTileProperties(4, FlxObject.ANY);
+		tileMap.setTileProperties(5, FlxObject.NONE);
+		
+		spaceShip = new SpaceShip();
+		
+		loader.loadEntities(placeEntities, "entities");
 		
 		add(tileMap);
 		add(spaceShip);
@@ -31,9 +44,21 @@ class MenuState extends FlxState
 	
 		super.create();
 	}
-
+	
+	private function placeEntities(entityName:String, entityData:Xml):Void
+    {
+        var x:Int = Std.parseInt(entityData.get("x"));
+        var y:Int = Std.parseInt(entityData.get("y"));
+        if (entityName == "player")
+        {
+            spaceShip.x = x;
+            spaceShip.y = y;
+        }
+    }
+ 
 	override public function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
+		//FlxG.collide(spaceShip, tileMap);
 	}
 }
