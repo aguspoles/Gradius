@@ -20,7 +20,7 @@ class Laser extends FlxSprite
 		super.update(elapsed);
 	    velocity.x = 350;
 		 
-		if (x > FlxG.width)
+		if (x > FlxG.camera.scroll.x + FlxG.width)
 		    destroy();
 	}
 	
