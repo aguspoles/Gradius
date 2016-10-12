@@ -4,6 +4,7 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.system.FlxAssets.FlxGraphicAsset;
 import sprites.Laser;
+import states.PlayState;
 
 class SpaceShip extends FlxSprite
 {
@@ -48,5 +49,12 @@ class SpaceShip extends FlxSprite
 		if (FlxG.keys.pressed.DOWN && y < FlxG.height - height)        
 		    velocity.y += velocidadY;
 	}
-	
+	public function death():Void
+	{
+		Reg.vidas--;
+		if(Reg.vidas > -1)
+			FlxG.switchState(new PlayState());
+		else
+			destroy();
+	}
 }

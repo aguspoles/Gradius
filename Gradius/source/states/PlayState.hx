@@ -70,7 +70,7 @@ class PlayState extends FlxState
 		
 		//Esto ya basta para que el player colisiones con los tiles, respetando las reglas que antes seteamos.
 		if (FlxG.collide(tilemap, spaceShip))
-		    spaceShip.destroy();
+		    spaceShip.death();
 	}
 	
 	
