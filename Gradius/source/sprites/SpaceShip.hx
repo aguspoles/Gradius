@@ -57,4 +57,8 @@ class SpaceShip extends FlxSprite
 		else
 			destroy();
 	}
+	public function getY():Float
+	{
+		return y;
+	}
 }

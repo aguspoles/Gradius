@@ -16,6 +16,7 @@ import flixel.tile.FlxTilemap;//para usarlo
 import flixel.FlxObject;
 import sprites.Ovni;
 import sprites.SpaceShip;
+import sprites.Apuntador;
 
 class PlayState extends FlxState
 {
@@ -25,12 +26,14 @@ class PlayState extends FlxState
 	private var ovni:sprites.Ovni;
 	private var cameraGuide:FlxSprite;
 	public var enemys:FlxTypedGroup<Ovni>;
+	private var shooter:sprites.Apuntador;
+	private var enemys2:FlxTypedGroup<Apuntador>;
 	
 	override public function create():Void
 	{
 		FlxG.cameras.bgColor = 0xff0078f8;
 		enemys = new FlxTypedGroup<Ovni>();
-		
+		enemys2 = new FlxTypedGroup<Apuntador>();
 		//	Cargo el nivel de OGMO a un Tilemap
 		loader = new FlxOgmoLoader(AssetPaths.nivel__oel);
 		tilemap = loader.loadTilemap(AssetPaths.rocas__png, 16, 16, "tilesets");
@@ -62,6 +65,7 @@ class PlayState extends FlxState
 		add(tilemap);
 		add(spaceShip);
 		add(enemys);
+		add(enemys2);
 	}
 
 	override public function update(elapsed:Float):Void
@@ -71,6 +75,11 @@ class PlayState extends FlxState
 		//Esto ya basta para que el player colisiones con los tiles, respetando las reglas que antes seteamos.
 		if (FlxG.collide(tilemap, spaceShip))
 		    spaceShip.death();
+		//enemys2.setY(spaceShip.getY());
+		for (i in 0...enemys2.length)
+		{
+			enemys2.members[i].setY(spaceShip.getY());
+		}
 	}
 	
 	
@@ -87,7 +96,9 @@ class PlayState extends FlxState
 			case "player":
 				spaceShip = new sprites.SpaceShip(entityStartX, entityStartY);
 			case "Ovni":
-				    enemys.add(new Ovni(entityStartX, entityStartY)); 
+				    enemys.add(new Ovni(entityStartX, entityStartY));
+			case "Apuntador":
+				enemys2.add(new Apuntador(entityStartX, entityStartY));
 		}
 
 	}

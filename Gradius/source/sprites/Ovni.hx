@@ -33,16 +33,14 @@ class Ovni extends FlxSprite
 		timer++;
 		if (flag && timer == 30)
 		{
-			//y -= 20;
-			velocity.y = maxVelocity(velocity.y += 10,10);
+			y -= 20;
 			flag = false;
 			timer = 0;
 		}
 		
 		else if(timer == 30)
 		{
-			//y += 20;
-			velociy.y -= 10;
+			y += 20;
 			flag = true;
 			timer = 0;
 		}
