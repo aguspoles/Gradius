@@ -24,11 +24,11 @@ class PlayState extends FlxState
 	private var loader:FlxOgmoLoader;
 	private var ovni:sprites.Ovni;
 	private var cameraGuide:FlxSprite;
-	public var enemys(default, null):FlxTypedGroup<Ovni>;
+	public var enemys:FlxTypedGroup<Ovni>;
 	
 	override public function create():Void
 	{
-		bgColor = FlxColor.CYAN;
+		FlxG.cameras.bgColor = 0xff0078f8;
 		enemys = new FlxTypedGroup<Ovni>();
 		
 		//	Cargo el nivel de OGMO a un Tilemap
