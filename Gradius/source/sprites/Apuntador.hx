@@ -13,7 +13,9 @@ class Apuntador extends FlxSprite
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset) 
 	{
 		super(X, Y, SimpleGraphic);
-		makeGraphic(16, 16);
+		loadGraphic(AssetPaths.Apuntador__png, true, 16, 24);
+		animation.add("flying", [0, 1], 4, true);
+		animation.play("flying");
 	}
 	  override public function update(elapsed:Float):Void
     {
