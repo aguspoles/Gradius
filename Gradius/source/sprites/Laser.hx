@@ -21,7 +21,7 @@ class Laser extends FlxSprite
 	{
 		super.update(elapsed);
 		 
-		if (x > FlxG.camera.scroll.x + FlxG.width)
+		if (x > FlxG.camera.scroll.x + FlxG.width || x < FlxG.camera.scroll.x)
 		    destroy();
 		
 	}

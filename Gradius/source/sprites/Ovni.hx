@@ -62,5 +62,8 @@ class Ovni extends FlxSprite
 			flag = true;
 			timer = 0;
 		}
+		
+		if (x <= FlxG.camera.scroll.x)
+		    destroy();  
 	}
 }

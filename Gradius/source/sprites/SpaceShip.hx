@@ -13,11 +13,14 @@ class SpaceShip extends FlxSprite
 	private var velocidadY:Int = 120;
 	private var velocidadX:Int = 120;
 	private var timer:Int = 0;
+	private var timer1:Int = 0;
 
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset) 
 	{
 		super(X, Y, SimpleGraphic);
-		makeGraphic(16, 16);
+		loadGraphic(AssetPaths.spaceship__png, true, 32, 8);
+		animation.add("flying", [0, 1], 6, true);
+		animation.play("flying");
 		
 		Reg.grlaser = new FlxTypedGroup<Laser>();
 	}
@@ -49,7 +52,7 @@ class SpaceShip extends FlxSprite
 	private function disparo():Void
 	{
 		timer++;
-		if ((FlxG.keys.pressed.SPACE || FlxG.keys.justPressed.SPACE) && timer >= 15)
+		if (((FlxG.keys.pressed.SPACE || FlxG.keys.justPressed.SPACE) || (FlxG.keys.pressed.C || FlxG.keys.justPressed.C)) && timer >= 15)
 		{ 
 			Reg.grlaser.add(new sprites.Laser(x + width, y + height / 2 -4));
 			timer = 0;
@@ -82,6 +85,30 @@ class SpaceShip extends FlxSprite
 			Reg.grlaser.members[i].destroy();
 			ovni.destroy();
 		}
+		}
+	}
+	public function interactApuntador(apuntador:Apuntador):Void
+	{
+		for (i in 0...Reg.grlaser.length)
+		{
+			if (Reg.grlaser.members[i] != null && FlxG.overlap(apuntador, Reg.grlaser.members[i]))
+			{
+				Reg.grlaser.members[i].destroy();
+				apuntador.destroy();
+			}
+		}
+	}
+	private function pickMissile(misil:Missile):Void
+	{
+		if (FlxG.overlap(misil, this))
+		{
+			timer1++;
+		    if ((FlxG.keys.pressed.SPACE || FlxG.keys.justPressed.SPACE) && timer <= 300)
+		    { 
+			   Reg.grlaser.add(new sprites.Laser(x + width, y + height / 2 -4));
+			   timer1 = 0;
+			   FlxG.state.add(Reg.grlaser);
+		    }
 		}
 	}
 

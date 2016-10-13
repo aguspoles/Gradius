@@ -27,13 +27,13 @@ class PlayState extends FlxState
 	private var loader:FlxOgmoLoader;
 	private var cameraGuide:FlxSprite;
 	private var shooter:sprites.Apuntador;
-	private var enemys2:FlxTypedGroup<Apuntador>;
+	
 	
 	override public function create():Void
 	{
 		FlxG.cameras.bgColor = 0xff0078f8;
 		Reg.enemys = new FlxTypedGroup<Ovni>();
-		enemys2 = new FlxTypedGroup<Apuntador>();
+		Reg.enemys2 = new FlxTypedGroup<Apuntador>();
 		//	Cargo el nivel de OGMO a un Tilemap
 		loader = new FlxOgmoLoader(AssetPaths.nivel__oel);
 		tilemap = loader.loadTilemap(AssetPaths.rocas__png, 16, 16, "tilesets");
@@ -65,7 +65,7 @@ class PlayState extends FlxState
 		add(tilemap);
 		add(spaceShip);
 		add(Reg.enemys);
-		add(enemys2);
+		add(Reg.enemys2);
 	}
 
 	override public function update(elapsed:Float):Void
@@ -76,10 +76,11 @@ class PlayState extends FlxState
 		    spaceShip.death();
 		
 		collisionLaserEnemy();
+		collisionLaserApuntador();
 		
-		for (i in 0...enemys2.length)
+		for (i in 0...Reg.enemys2.length)
 		{
-			enemys2.members[i].setY(spaceShip.getY());
+			Reg.enemys2.members[i].setY(spaceShip.getY());
 		} 
 	}
 	
@@ -98,7 +99,7 @@ class PlayState extends FlxState
 			case "Ovni":
 				    Reg.enemys.add(new Ovni(entityStartX, entityStartY));
 			case "Apuntador":
-				enemys2.add(new Apuntador(entityStartX, entityStartY));
+				Reg.enemys2.add(new Apuntador(entityStartX, entityStartY));
 		}
 
 	}
@@ -108,6 +109,13 @@ class PlayState extends FlxState
 		for (i in 0...Reg.enemys.length)
 		{
 		   spaceShip.interact(Reg.enemys.members[i]); 
+		}
+	}
+	private function collisionLaserApuntador():Void
+	{
+		for (i in 0...Reg.enemys2.length)
+		{
+		   spaceShip.interactApuntador(Reg.enemys2.members[i]); 
 		}
 	}
 }
