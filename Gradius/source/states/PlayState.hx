@@ -78,6 +78,7 @@ class PlayState extends FlxState
 		collisionLaserEnemy();
 		collisionLaserMap();
 		collisionLaserApuntador();
+		collisionShipAndEnemy2();
 		
 		for (i in 0...Reg.enemys2.length)
 		{
@@ -129,6 +130,12 @@ class PlayState extends FlxState
 
 		}
 	}
-
-
+	private function collisionShipAndEnemy2():Void
+	{
+		for (i in 0...Reg.enemys2.length)
+		{
+			if (Reg.enemys2.members[i] != null && FlxG.overlap(spaceShip, Reg.enemys2.members[i]))
+				spaceShip.death();
+		} 
+	}
 }

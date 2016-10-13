@@ -60,7 +60,7 @@ class SpaceShip extends FlxSprite
 			timer = 0;
 			FlxG.state.add(Reg.grlaser);
 		}
-		else if((FlxG.keys.pressed.SPACE || FlxG.keys.justPressed.SPACE) && timer1 <= 30 && flag)
+		else if(((FlxG.keys.pressed.SPACE || FlxG.keys.justPressed.SPACE) || (FlxG.keys.pressed.C || FlxG.keys.justPressed.C)) && timer1 <= 30 && flag)
 		{
 			timer1++;
 			Reg.grlaser.add(new sprites.Laser(x + width, y + height / 2 -4));

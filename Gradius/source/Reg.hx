@@ -25,9 +25,8 @@ import sprites.EnemyShoot;
 class Reg
 {
 	static public var vidas:Int = 2;
-	
+	static public var enemys2:FlxTypedGroup<Apuntador>;
     static public var enemys:FlxTypedGroup<Ovni>;
     static public var grlaser:FlxTypedGroup<Laser>;
 	static public var grEnemyShoot:FlxTypedGroup<EnemyShoot>;
-	static public var enemys2:FlxTypedGroup<Apuntador>;
 }
