@@ -2,15 +2,13 @@ package sprites;
 
 import flixel.FlxSprite;
 import flixel.FlxG;
-import flixel.addons.editors.tiled.TiledMap;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.system.FlxAssets.FlxGraphicAsset;
-import flixel.tile.FlxTilemap;
 
 
-class Laser extends FlxSprite
+class EnemyShoot extends FlxSprite
 {
-	private var VELOCITY:Float = 350;
+	private var VELOCITY:Float = -350;
 
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset) 
 	{
@@ -23,14 +21,9 @@ class Laser extends FlxSprite
 	{
 		super.update(elapsed);
 		 
-		if (x > FlxG.camera.scroll.x + FlxG.width || x < FlxG.camera.scroll.x)
-		    destroy();	
-	}
-	
-	public function interact(tilemap:FlxTilemap):Void
-	{
-		if (FlxG.collide(this, tilemap))
+		if (x < FlxG.camera.scroll.x || x >= FlxG.camera.scroll.x + FlxG.width)
 		    destroy();
+		
 	}
 	
 }

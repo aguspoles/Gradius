@@ -76,6 +76,7 @@ class PlayState extends FlxState
 		    spaceShip.death();
 		
 		collisionLaserEnemy();
+		collisionLaserMap();
 		
 		for (i in 0...enemys2.length)
 		{
@@ -108,6 +109,14 @@ class PlayState extends FlxState
 		for (i in 0...Reg.enemys.length)
 		{
 		   spaceShip.interact(Reg.enemys.members[i]); 
+		}
+	}
+	
+	private function collisionLaserMap():Void
+	{
+		for (i in 0...Reg.grlaser.length)
+		{
+			Reg.grlaser.members[i].interact(tilemap);
 		}
 	}
 }

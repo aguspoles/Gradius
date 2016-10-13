@@ -18,6 +18,8 @@ class Apuntador extends FlxSprite
 	  override public function update(elapsed:Float):Void
     {
         super.update(elapsed);
+		if (x < FlxG.camera.scroll.x)
+		   destroy();
 	}
 	
 	public function setY(num:Float):Void
