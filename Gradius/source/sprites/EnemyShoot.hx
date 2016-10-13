@@ -8,7 +8,7 @@ import flixel.system.FlxAssets.FlxGraphicAsset;
 
 class EnemyShoot extends FlxSprite
 {
-	private var VELOCITY:Float = -350;
+	private var VELOCITY:Float = -250;
 
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset) 
 	{

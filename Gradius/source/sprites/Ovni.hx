@@ -30,19 +30,20 @@ class Ovni extends FlxSprite
     {
         super.update(elapsed);
 		move();
-		shoot();
     }
 	
-	private function shoot():Void
+	public function shoot():Void
 	{
-		timer1++;
-		if (timer1 == 30)
+		if (exists)
 		{
-		    Reg.grEnemyShoot.add(new EnemyShoot(x + width, y + height / 2 -4));
-			timer1 = 0;
-			FlxG.state.add(Reg.grEnemyShoot);
-		}
-		    
+			timer1++;
+			if (timer1 == 30)
+			{
+				Reg.grEnemyShoot.add(new EnemyShoot(x + width, y + height / 2 -4));
+				timer1 = 0;
+				FlxG.state.add(Reg.grEnemyShoot);
+			}
+		}   
 	}
 	
 	private function move():Void
