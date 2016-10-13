@@ -29,4 +29,5 @@ class Reg
     static public var enemys:FlxTypedGroup<Ovni>;
     static public var grlaser:FlxTypedGroup<Laser>;
 	static public var grEnemyShoot:FlxTypedGroup<EnemyShoot>;
+	static public var enemys2:FlxTypedGroup<Apuntador>;
 }
