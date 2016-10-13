@@ -81,6 +81,7 @@ class PlayState extends FlxState
 		collisionPlayerEnemy();
 		collisionPlayerApuntador();
 		collisionShipAndEnemy2();
+		collisionShipAndEnemyShoot();
 		
 		for (i in 0...Reg.enemys2.length)
 		{
@@ -164,5 +165,13 @@ class PlayState extends FlxState
 			if (Reg.enemys2.members[i] != null && FlxG.overlap(spaceShip, Reg.enemys2.members[i]))
 				spaceShip.death();
 		} 
+	}
+	private function collisionShipAndEnemyShoot():Void
+	{
+		for (i in 0...Reg.grEnemyShoot.length)
+		{
+			if (Reg.grEnemyShoot.members[i] != null && FlxG.overlap(spaceShip, Reg.grEnemyShoot.members[i]))
+				spaceShip.death();
+		}
 	}
 }
