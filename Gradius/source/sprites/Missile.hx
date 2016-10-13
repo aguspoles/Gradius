@@ -2,28 +2,23 @@ package sprites;
 
 import flixel.FlxSprite;
 import flixel.FlxG;
-import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.system.FlxAssets.FlxGraphicAsset;
+import flixel.util.FlxColor;
 
 
-class Laser extends FlxSprite
+class Missile extends FlxSprite
 {
 	private var VELOCITY:Float = 350;
 
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset) 
 	{
 		super(X, Y, SimpleGraphic);
-		makeGraphic(4, 4);
-		velocity.x = VELOCITY;
+		makeGraphic(16, 16, FlxColor.BROWN);
 	}
 	
 	override public function update(elapsed:Float):Void 
 	{
 		super.update(elapsed);
-		 
-		if (x > FlxG.camera.scroll.x + FlxG.width)
-		    destroy();
-		
 	}
 	
 }

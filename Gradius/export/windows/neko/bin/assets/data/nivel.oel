@@ -37,5 +37,7 @@
     <Ovni id="19" x="288" y="160" />
     <Ovni id="20" x="272" y="64" />
     <Ovni id="21" x="672" y="32" />
+    <powerUp id="22" x="320" y="96" />
+    <powerUp id="23" x="448" y="32" />
   </entities>
 </level>
