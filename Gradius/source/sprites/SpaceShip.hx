@@ -13,9 +13,12 @@ class SpaceShip extends FlxSprite
 	private var velocidadY:Int = 120;
 	private var velocidadX:Int = 120;
 	private var misil:Missile;
+	private var speed:Speed;
 	private var timer:Int = 0;
 	private var timer1:Int = 0;
+	private var timer2 = 0;
 	private var flag:Bool = false;
+	private var flag1:Bool = false;
 
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset) 
 	{
@@ -36,16 +39,18 @@ class SpaceShip extends FlxSprite
 		disparo();
 		
 		pickMissile(misil);
+		
+		pickSpeed(speed);
 	}
 		
 	private function movePlayer():Void { 
 		velocity.x = 50;
 		velocity.y = 0;
-        if (FlxG.keys.pressed.LEFT && x > FlxG.camera.scroll.x)         
+        if (FlxG.keys.pressed.LEFT && x > FlxG.camera.scroll.x+4)         
 		    velocity.x -= velocidadX;
         if (FlxG.keys.pressed.RIGHT && x < FlxG.camera.scroll.x + FlxG.width - width)         
 		    velocity.x += velocidadY;
-        if (FlxG.keys.pressed.UP && y > 0)        
+        if (FlxG.keys.pressed.UP && y > 4)        
 		    velocity.y -= velocidadY;
 		if (FlxG.keys.pressed.DOWN && y < FlxG.height - height)        
 		    velocity.y += velocidadY;
@@ -96,6 +101,11 @@ class SpaceShip extends FlxSprite
 	            misil = new Missile(Reg.grlaser.members[i].x, Reg.grlaser.members[i].y);
 	            FlxG.state.add(misil); 
 			}
+			else if (j == 0)
+			{
+				speed = new Speed(Reg.grlaser.members[i].x, Reg.grlaser.members[i].y);
+	            FlxG.state.add(speed); 
+			}
 			Reg.grlaser.members[i].destroy();
 			ovni.destroy();
 		}
@@ -110,6 +120,28 @@ class SpaceShip extends FlxSprite
 			misil.destroy();
 		}
 	}
+	
+	private function pickSpeed(speed:Speed):Void
+	{
+		if ((speed != null && FlxG.overlap(speed, this)) || flag1)
+		{
+			timer2++;
+			if (!flag1)
+			{
+			velocidadX += 60;
+			velocidadY += 60;
+			}
+			flag1 = true;
+			speed.destroy();
+			if (timer2 >= 300)
+			{
+			timer2 = 0;
+			velocidadX -= 60;
+			velocidadY -= 60;
+			flag1 = false;
+			}
+		}
+	}
 
 	public function interactApuntador(apuntador:Apuntador):Void
 	{
@@ -122,7 +154,7 @@ class SpaceShip extends FlxSprite
 			}
 		}
 	}
-
+	
 	public function getY():Float
 	{
 		return y;
