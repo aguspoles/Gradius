@@ -76,4 +76,9 @@ class SpaceShip extends FlxSprite
 			laser.kill();
 		}
 	}
+
+	public function getY():Float
+	{
+		return y;
+	}
 }

@@ -16,7 +16,7 @@
     <Width>25600</Width>
     <Height>240</Height>
   </LevelMaximumSize>
-  <Filename>C:\Users\rocio\Documents\GitHub\Gradius\Gradius\assets\data\nivel.oep</Filename>
+  <Filename>C:\Users\113\Desktop\Gradius\Gradius\assets\data\nivel.oep</Filename>
   <AngleMode>Radians</AngleMode>
   <CameraEnabled>true</CameraEnabled>
   <CameraSize>
@@ -94,7 +94,7 @@
       <ValueDefinitions />
       <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
     </EntityDefinition>
-    <EntityDefinition Name="powerUp" Limit="20" ResizableX="false" ResizableY="false" Rotatable="false" RotateIncrement="15">
+    <EntityDefinition Name="Apuntador" Limit="1000" ResizableX="false" ResizableY="false" Rotatable="false" RotateIncrement="15">
       <Size>
         <Width>16</Width>
         <Height>16</Height>
@@ -104,7 +104,7 @@
         <Y>0</Y>
       </Origin>
       <ImageDefinition DrawMode="Rectangle" ImagePath="" Tiled="false">
-        <RectColor A="255" R="0" G="255" B="0" />
+        <RectColor A="255" R="128" G="0" B="255" />
       </ImageDefinition>
       <ValueDefinitions />
       <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
