@@ -12,13 +12,14 @@ class SpaceShip extends FlxSprite
 {
 	private var velocidadY:Int = 120;
 	private var velocidadX:Int = 120;
-	public static var laser:sprites.Laser;
 	private var timer:Int = 0;
 
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset) 
 	{
 		super(X, Y, SimpleGraphic);
-		makeGraphic(16, 16);	
+		makeGraphic(16, 16);
+		
+		Reg.grlaser = new FlxTypedGroup<Laser>();
 	}
 	
 	override public function update(elapsed:Float):Void
@@ -26,16 +27,8 @@ class SpaceShip extends FlxSprite
 		super.update(elapsed);
 		
 		movePlayer();
-	
-		//disparo
-		timer++;
-		if ((FlxG.keys.pressed.SPACE || FlxG.keys.justPressed.SPACE) && timer >= 15)
-		{
-			laser = new sprites.Laser(x + width, y + height / 2 -4);
-			timer = 0;
-			FlxG.state.add(laser);
-		}
-
+		
+		disparo();
 	}
 		
 	private function movePlayer():Void { 
@@ -53,6 +46,17 @@ class SpaceShip extends FlxSprite
 		    velocity.y += velocidadY;
 	}
 	
+	private function disparo():Void
+	{
+		timer++;
+		if ((FlxG.keys.pressed.SPACE || FlxG.keys.justPressed.SPACE) && timer >= 15)
+		{ 
+			Reg.grlaser.add(new sprites.Laser(x + width, y + height / 2 -4));
+			timer = 0;
+			FlxG.state.add(Reg.grlaser);
+		}
+	}
+	
 	public function death():Void
 	{
 		Reg.vidas--;
@@ -62,18 +66,22 @@ class SpaceShip extends FlxSprite
 			destroy();
 	}
 	
-	public function interact(ovni:FlxTypedGroup<Ovni>):Void
+	public function interact(ovni:Ovni):Void
 	{
-		if (laser != null && FlxG.overlap(ovni, laser))
+		for (i in 0...Reg.grlaser.length)
+		{
+		if (Reg.grlaser.members[i] != null && FlxG.overlap(ovni, Reg.grlaser.members[i]))
 		{
 			var r:FlxRandom = new FlxRandom();
-			var i:Int = r.int(0, 20);
-			if (i == 2)
+			var j:Int = r.int(0, 2);
+			if (j == 2)
 			{
-	            var powerUp:Missile = new Missile(laser.x, laser.y);
-	            FlxG.state.add(powerUp);
+	            var powerUp:Missile = new Missile(Reg.grlaser.members[i].x, Reg.grlaser.members[i].y);
+	            FlxG.state.add(powerUp); 
 			}
-			laser.kill();
+			Reg.grlaser.members[i].destroy();
+			ovni.destroy();
+		}
 		}
 	}
 

@@ -25,16 +25,14 @@ class PlayState extends FlxState
 	private var spaceShip:sprites.SpaceShip;
 	private var tilemap:FlxTilemap;
 	private var loader:FlxOgmoLoader;
-	private var ovni:sprites.Ovni;
 	private var cameraGuide:FlxSprite;
-	public var enemys:FlxTypedGroup<Ovni>;
 	private var shooter:sprites.Apuntador;
 	private var enemys2:FlxTypedGroup<Apuntador>;
 	
 	override public function create():Void
 	{
 		FlxG.cameras.bgColor = 0xff0078f8;
-		enemys = new FlxTypedGroup<Ovni>();
+		Reg.enemys = new FlxTypedGroup<Ovni>();
 		enemys2 = new FlxTypedGroup<Apuntador>();
 		//	Cargo el nivel de OGMO a un Tilemap
 		loader = new FlxOgmoLoader(AssetPaths.nivel__oel);
@@ -66,7 +64,7 @@ class PlayState extends FlxState
 		add(cameraGuide);
 		add(tilemap);
 		add(spaceShip);
-		add(enemys);
+		add(Reg.enemys);
 		add(enemys2);
 	}
 
@@ -76,14 +74,13 @@ class PlayState extends FlxState
 	
 		if (FlxG.collide(tilemap, spaceShip))
 		    spaceShip.death();
-			
-		spaceShip.interact(enemys);
 		
-		//enemys2.setY(spaceShip.getY());
+		collisionLaserEnemy();
+		
 		for (i in 0...enemys2.length)
 		{
 			enemys2.members[i].setY(spaceShip.getY());
-		}
+		} 
 	}
 	
 	private function entityCreator(entityName:String, entityData:Xml):Void
@@ -99,10 +96,18 @@ class PlayState extends FlxState
 			case "player":
 				spaceShip = new sprites.SpaceShip(entityStartX, entityStartY);
 			case "Ovni":
-				    enemys.add(new Ovni(entityStartX, entityStartY));
+				    Reg.enemys.add(new Ovni(entityStartX, entityStartY));
 			case "Apuntador":
 				enemys2.add(new Apuntador(entityStartX, entityStartY));
 		}
 
+	}
+	
+	private function collisionLaserEnemy():Void
+	{
+		for (i in 0...Reg.enemys.length)
+		{
+		   spaceShip.interact(Reg.enemys.members[i]); 
+		}
 	}
 }
