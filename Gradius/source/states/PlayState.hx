@@ -180,7 +180,7 @@ class PlayState extends FlxState
 		for (i in 0...Reg.enemys.length)
 		{
 			if (Reg.enemys.members[i] != null && Reg.enemys.members[i].x < spaceShip.x + 1000)
-				Reg.enemys.members[i].shoot();
+					Reg.enemys.members[i].shoot();
 		}
 	}
 }

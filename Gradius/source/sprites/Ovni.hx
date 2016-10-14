@@ -14,6 +14,7 @@ class Ovni extends FlxSprite
 	private var flag:Bool = true;
 	private var timer:Int = 0;
 	private var timer1:Int = 0;
+	private var startMoving:Bool = false;
 	
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset) 
 	{
@@ -21,7 +22,7 @@ class Ovni extends FlxSprite
 		loadGraphic(AssetPaths.Enemigo1__png, true, 32, 32);
 		animation.add("flying", [0, 1], 4, true);
 		animation.play("flying");
-		
+		velocity.x = 0;
 		Reg.grEnemyShoot = new FlxTypedGroup<EnemyShoot>();
 	}
 	
@@ -37,27 +38,29 @@ class Ovni extends FlxSprite
 		if (exists)
 		{
 			timer1++;
-			if (timer1 == 30)
+			if (timer1 == 60)
 			{
 				Reg.grEnemyShoot.add(new EnemyShoot(x + width, y + height / 2 -4));
 				timer1 = 0;
 				FlxG.state.add(Reg.grEnemyShoot);
 			}
+			startMoving = true;
 		}   
 	}
 	
 	private function move():Void
 	{
-		velocity.x = -20;
+		if(startMoving == true)
+			velocity.x = -20;
 		timer++;
-		if (flag && timer == 30)
+		if (flag && timer == 60)
 		{
 			y -= 15;
 			flag = false;
 			timer = 0;
 		}
 		
-		else if(timer == 30)
+		else if(timer == 60)
 		{
 			y += 15;
 			flag = true;

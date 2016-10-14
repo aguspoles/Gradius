@@ -71,6 +71,7 @@ class SpaceShip extends FlxSprite
 			Reg.grlaser.add(new sprites.Laser(x + width, y + height / 2 -4));
 			timer = 0;
 			FlxG.state.add(Reg.grlaser);
+			trace ("BAM");
 			if (timer1 >= 30)
 			{
 			   flag = false;
