@@ -34,5 +34,7 @@
     <Apuntador id="17" x="3280" y="32" />
     <Apuntador id="15" x="3248" y="32" />
     <Apuntador id="16" x="3152" y="32" />
+    <brain id="19" x="352" y="80" />
+    <brain id="20" x="496" y="160" />
   </entities>
 </level>

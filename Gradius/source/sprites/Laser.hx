@@ -14,7 +14,11 @@ class Laser extends FlxSprite
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset) 
 	{
 		super(X, Y, SimpleGraphic);
-		makeGraphic(4, 4);
+		loadGraphic(AssetPaths.laser__png, true, 8, 8);
+		updateHitbox();
+		animation.add("shoot", [0, 1], 2, true);
+		animation.play("shoot");
+		
 		velocity.x = VELOCITY;
 	}
 	

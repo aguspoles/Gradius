@@ -14,6 +14,7 @@ class Apuntador extends FlxSprite
 	{
 		super(X, Y, SimpleGraphic);
 		loadGraphic(AssetPaths.Apuntador__png, true, 16, 24);
+		updateHitbox();
 		animation.add("flying", [0, 1], 4, true);
 		animation.play("flying");
 	}

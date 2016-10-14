@@ -21,6 +21,7 @@ import sprites.Ovni;
 import sprites.SpaceShip;
 import sprites.Apuntador;
 import sprites.EnemyShoot;
+import sprites.Brain;
 
 class Reg
 {
@@ -29,4 +30,5 @@ class Reg
     static public var enemys:FlxTypedGroup<Ovni>;
     static public var grlaser:FlxTypedGroup<Laser>;
 	static public var grEnemyShoot:FlxTypedGroup<EnemyShoot>;
+	static public var grBrain:FlxTypedGroup<Brain>;
 }

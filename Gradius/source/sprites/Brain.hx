@@ -10,21 +10,20 @@ import flixel.math.FlxMath;
 import flixel.system.FlxAssets.FlxGraphicAsset;
 import flixel.math.FlxRandom;
 
-class Ovni extends FlxSprite
+class Brain extends FlxSprite
 {
 	private var flag:Bool = true;
 	private var timer:Int = 0;
 	private var timer1:Int = 0;
-	private var startMoving:Bool = false;
 	
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset) 
 	{
 		super(X, Y, SimpleGraphic);
-		loadGraphic(AssetPaths.Enemigo1__png, true, 32, 32);
-		animation.add("flying", [0, 1], 4, true);
+		loadGraphic(AssetPaths.brain__png, true, 32, 32);
+		updateHitbox();
+		animation.add("flying", [0, 1], 15, true);
 		animation.play("flying");
-		velocity.x = 0;
-		Reg.grEnemyShoot = new FlxTypedGroup<EnemyShoot>();
+		
 	}
 	
 
@@ -32,27 +31,38 @@ class Ovni extends FlxSprite
     {
         super.update(elapsed);
 		move();
+		shoot();
     }
 	
-	public function shoot():Void
+	private function shoot():Void
 	{
-		if (exists)
+		timer1++;
+		if (timer1 == 30)
 		{
-			timer1++;
-			if (timer1 == 60)
-			{
-				Reg.grEnemyShoot.add(new EnemyShoot(x + width, y + height / 2 -4));
-				timer1 = 0;
-				FlxG.state.add(Reg.grEnemyShoot);
-			}
-			startMoving = true;
-		}   
+		    Reg.grEnemyShoot.add(new EnemyShoot(x + width, y + height / 2 -4));
+			timer1 = 0;
+			FlxG.state.add(Reg.grEnemyShoot);
+		}
+		    
 	}
 	
 	private function move():Void
 	{
-		if(startMoving == true)
-			velocity.x = -20;
+		velocity.x = -20;
+		timer++;
+		if (flag && timer == 30)
+		{
+			y -= 20;
+			flag = false;
+			timer = 0;
+		}
+		
+		else if(timer == 30)
+		{
+			y += 20;
+			flag = true;
+			timer = 0;
+		}
 		
 
 		if (x <= FlxG.camera.scroll.x)

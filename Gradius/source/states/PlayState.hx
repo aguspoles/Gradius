@@ -19,6 +19,7 @@ import sprites.Missile;
 import sprites.Ovni;
 import sprites.SpaceShip;
 import sprites.Apuntador;
+import sprites.Brain;
 
 class PlayState extends FlxState
 {
@@ -34,6 +35,7 @@ class PlayState extends FlxState
 		FlxG.cameras.bgColor = 0xff0078f8;
 		Reg.enemys = new FlxTypedGroup<Ovni>();
 		Reg.enemys2 = new FlxTypedGroup<Apuntador>();
+		Reg.grBrain = new FlxTypedGroup<Brain>();
 		//	Cargo el nivel de OGMO a un Tilemap
 		loader = new FlxOgmoLoader(AssetPaths.nivel__oel);
 		tilemap = loader.loadTilemap(AssetPaths.rocas__png, 16, 16, "tilesets");
@@ -66,6 +68,7 @@ class PlayState extends FlxState
 		add(spaceShip);
 		add(Reg.enemys);
 		add(Reg.enemys2);
+		add(Reg.grBrain);
 	}
 
 	override public function update(elapsed:Float):Void
@@ -80,9 +83,12 @@ class PlayState extends FlxState
 		collisionLaserApuntador();
 		collisionPlayerEnemy();
 		collisionPlayerApuntador();
-		collisionShipAndEnemy2();
-		collisionShipAndEnemyShoot();
+		collisionPlayerEnemyShoot();
+		collisionLaserBrain();
+		//collisionShipAndEnemy2();
+		//collisionShipAndEnemyShoot();
 		enemysCheckShot();
+
 		
 		for (i in 0...Reg.enemys2.length)
 		{
@@ -105,7 +111,9 @@ class PlayState extends FlxState
 			case "Ovni":
 				    Reg.enemys.add(new Ovni(entityStartX, entityStartY));
 			case "Apuntador":
-				Reg.enemys2.add(new Apuntador(entityStartX, entityStartY));
+				    Reg.enemys2.add(new Apuntador(entityStartX, entityStartY));
+			case "brain":
+				Reg.grBrain.add(new sprites.Brain(entityStartX, entityStartY));
 		}
 
 	}
@@ -134,6 +142,15 @@ class PlayState extends FlxState
 
 		}
 	}
+	
+	private function collisionLaserBrain():Void
+	{
+		for (i in 0...Reg.grBrain.length)
+		{
+		   spaceShip.interactBrain(Reg.grBrain.members[i]); 
+
+		}
+	}
 
 	private function collisionPlayerEnemy():Void
 	{
@@ -143,6 +160,18 @@ class PlayState extends FlxState
 			{
 				spaceShip.death();
 				Reg.enemys.members[i].destroy();
+			}
+		}
+	}
+	
+	private function collisionPlayerBrain():Void
+	{
+		for (i in 0...Reg.grBrain.length)
+		{
+			if (FlxG.overlap(spaceShip, Reg.grBrain.members[i]))
+			{
+				spaceShip.death();
+				Reg.grBrain.members[i].destroy();
 			}
 		}
 	}
@@ -158,23 +187,19 @@ class PlayState extends FlxState
 			}
 		}
 	}
-
-	private function collisionShipAndEnemy2():Void
-	{
-		for (i in 0...Reg.enemys2.length)
-		{
-			if (Reg.enemys2.members[i] != null && FlxG.overlap(spaceShip, Reg.enemys2.members[i]))
-				spaceShip.death();
-		} 
-	}
-	private function collisionShipAndEnemyShoot():Void
+	
+	private function collisionPlayerEnemyShoot():Void
 	{
 		for (i in 0...Reg.grEnemyShoot.length)
 		{
-			if (Reg.grEnemyShoot.members[i] != null && FlxG.overlap(spaceShip, Reg.grEnemyShoot.members[i]))
+			if (FlxG.overlap(spaceShip, Reg.grEnemyShoot.members[i]))
+			{
 				spaceShip.death();
+				Reg.grEnemyShoot.members[i].destroy();
+			}
 		}
 	}
+	
 	private function enemysCheckShot():Void
 	{
 		for (i in 0...Reg.enemys.length)

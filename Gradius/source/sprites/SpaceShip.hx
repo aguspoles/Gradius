@@ -24,6 +24,7 @@ class SpaceShip extends FlxSprite
 	{
 		super(X, Y, SimpleGraphic);
 		loadGraphic(AssetPaths.spaceship__png, true, 32, 8);
+		updateHitbox();
 		animation.add("flying", [0, 1], 6, true);
 		animation.play("flying");
 		
@@ -152,6 +153,18 @@ class SpaceShip extends FlxSprite
 			{
 				Reg.grlaser.members[i].destroy();
 				apuntador.destroy();
+			}
+		}
+	}
+	
+	public function interactBrain(brain:Brain):Void
+	{
+		for (i in 0...Reg.grlaser.length)
+		{
+			if (Reg.grlaser.members[i] != null && FlxG.overlap(brain, Reg.grlaser.members[i]))
+			{
+				Reg.grlaser.members[i].destroy();
+				brain.destroy();
 			}
 		}
 	}
